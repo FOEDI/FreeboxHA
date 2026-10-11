@@ -1,0 +1,129 @@
+# Copie les exemples utiles dans tes automatisations HA.
+# Remplace les MAC et entity_id d'exemple par tes valeurs réelles.
+# Le profil Essentiel garde un tracker par appareil regroupé.
+# Les capteurs optionnels utilisés ici doivent être activés individuellement.
+# device_id des événements est une clé Freebox HA, pas l'UUID HA du registre.
+
+- alias: Freebox — nouvel équipement
+  triggers:
+    - trigger: event
+      event_type: freebox_ultra_device_discovered
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: Nouvel appareil réseau
+        message: "{{ trigger.event.data.get('name', 'Inconnu') }} — {{ trigger.event.data.device_id }}"
+  mode: queued
+
+- alias: Freebox — connexion d'un appareil précis
+  triggers:
+    - trigger: event
+      event_type: freebox_ultra_device_connected
+      event_data:
+        device_id: 'mac:02:00:00:00:00:01'
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: Appareil connecté
+        message: "Le téléphone vient de se connecter."
+
+- alias: Freebox — présence du téléphone
+  triggers:
+    - trigger: state
+      entity_id: device_tracker.example_phone_presence
+      to: home
+  conditions:
+    - condition: template
+      value_template: "{{ trigger.from_state is not none and trigger.from_state.state == 'not_home' }}"
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: Présence
+        message: "Le téléphone est présent sur le réseau."
+
+- alias: Freebox — équipement critique absent
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.equipement_critique_connected
+      to: 'off'
+      for: '00:02:00'
+  conditions:
+    - condition: template
+      value_template: "{{ trigger.from_state is not none and trigger.from_state.state == 'on' }}"
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: Équipement critique déconnecté
+        message: "L'équipement est réellement absent depuis deux minutes."
+
+- alias: Freebox — lien fibre déconnecté
+  triggers:
+    - trigger: state
+      entity_id: binary_sensor.fibre_sfp_link
+      from: 'on'
+      to: 'off'
+      for: '00:00:30'
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: Fibre déconnectée
+        message: "La Freebox rapporte le lien optique interrompu."
+
+- alias: Freebox — mauvaise qualité Wi-Fi
+  triggers:
+    - trigger: event
+      event_type: freebox_ultra_wifi_signal_low
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: Signal Wi-Fi bas
+        message: "{{ trigger.event.data.get('name', trigger.event.data.device_id) }} : {{ trigger.event.data.new_value }} {{ trigger.event.data.unit }}"
+
+- alias: Freebox — port Ethernet surveillé
+  triggers:
+    - trigger: event
+      event_type: freebox_ultra_ethernet_link_down
+      event_data:
+        device_id: 'port:1'
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: Ethernet
+        message: "Le lien du port 1 est interrompu."
+
+- alias: Freebox — changement d'adresse IP
+  triggers:
+    - trigger: event
+      event_type: freebox_ultra_device_ip_changed
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: Adresse IP modifiée
+        message: "{{ trigger.event.data.get('name', trigger.event.data.device_id) }} : {{ trigger.event.data.old_value }} → {{ trigger.event.data.new_value }}"
+  mode: queued
+
+# Variante : utiliser l’unique tracker regroupé et son attribut SSID.
+# Remplacer aussi le SSID d’exemple par celui effectivement observé.
+- alias: Freebox — téléphone présent sur le Wi-Fi de la maison
+  triggers:
+    - trigger: state
+      entity_id: device_tracker.example_phone_presence
+      to: home
+    - trigger: state
+      entity_id: device_tracker.example_phone_presence
+      attribute: ssid
+      to: Example network
+  conditions:
+    - condition: state
+      entity_id: device_tracker.example_phone_presence
+      state: home
+    - condition: state
+      entity_id: device_tracker.example_phone_presence
+      attribute: ssid
+      state: Example network
+  actions:
+    - action: persistent_notification.create
+      data:
+        title: Téléphone sur le Wi-Fi
+        message: Le téléphone regroupé est présent sur le Wi-Fi de la maison.
+  mode: single

@@ -1,0 +1,163 @@
+{
+  "title": "Freebox HA",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect your Freebox",
+        "description": "Freebox HA {version}.\n\nLocal box address. Only public /api_version metadata uses HTTP. Pairing and all data use verified HTTPS. The default local HTTPS port is 443.",
+        "data": {
+          "host": "Local address",
+          "port": "Local HTTPS port"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Pair again",
+        "description": "The token was revoked. A new authorization must be accepted on the Freebox screen."
+      }
+    },
+    "progress": {
+      "pairing": "Authorize “Freebox HA” on your Freebox screen. This can take up to two minutes."
+    },
+    "error": {
+      "cannot_connect": "Cannot connect. Check the local address, HTTPS and certificate.",
+      "tls_certificate_error": "The HTTPS certificate could not be verified. Check the Home Assistant clock and install the latest Freebox HA version.",
+      "tls_handshake_error": "The HTTPS handshake failed. Check the local HTTPS port and the Freebox firmware.",
+      "connection_timeout": "The Freebox did not respond in time. Check that Home Assistant can reach its local address.",
+      "connection_refused": "The local HTTPS port refused the connection. Check the port; 443 is the default.",
+      "https_unavailable": "This Freebox reports that HTTPS is unavailable.",
+      "invalid_api_version": "The response to /api_version is invalid or incomplete. Check the local box address.",
+      "apps_denied": "Freebox OS refuses new application authorizations. Allow applications in its access settings.",
+      "wrong_freebox": "The Freebox identity changed between discovery and the verified HTTPS connection.",
+      "invalid_request": "Freebox rejected the authorization parameters. Update Freebox HA and check the pairing error in Home Assistant logs.",
+      "new_apps_denied": "Freebox OS has disabled authorization of new applications. Enable it in its access settings.",
+      "denied_from_external_ip": "Freebox considers this request remote. Home Assistant must access it from the local network to pair.",
+      "ratelimited": "Freebox temporarily limits authorization requests. Wait before retrying.",
+      "internal_error": "Freebox reported an internal authorization error. Check its firmware and retry later."
+    },
+    "abort": {
+      "already_configured": "This Freebox is already configured.",
+      "wrong_freebox": "The Freebox identity does not match.",
+      "denied": "Authorization was denied on the Freebox.",
+      "pairing_failed": "Pairing timed out or was interrupted. Try again.",
+      "reauth_successful": "Reauthentication successful.",
+      "reconfigure_successful": "Configuration updated."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Freebox HA options",
+        "menu_options": {
+          "categories": "Families and details",
+          "intervals": "Polling intervals",
+          "alerts": "Events and thresholds",
+          "privacy": "Privacy and diagnostics",
+          "capabilities": "Detected capabilities",
+          "essential": "Apply the Essential profile"
+        }
+      },
+      "categories": {
+        "title": "Data collection",
+        "description": "Denied endpoints are skipped and reported in diagnostics. No active scans are performed. Downloads and parental controls may require additional Freebox OS permissions. Only essential entities are enabled by default. Disabled sensors can be enabled individually from their device. Name grouping merges LAN/Wi-Fi identities and retains their MAC aliases.",
+        "data": {
+          "families": "Data families",
+          "detailed_devices": "Detailed metrics for individual clients",
+          "websocket": "Try supported WebSocket subscriptions",
+          "advanced_metrics": "Enable technical and diagnostic metrics",
+          "group_by_name": "Group devices with the same name"
+        }
+      },
+      "intervals": {
+        "title": "Intervals (seconds)",
+        "data": {
+          "interval_wan": "Internet / WAN",
+          "interval_fibre": "Optical fibre",
+          "interval_presence": "Network device inventory",
+          "interval_wifi_clients": "Individual Wi-Fi clients",
+          "interval_ethernet": "Ethernet ports",
+          "interval_system": "Hardware and system",
+          "interval_wifi_radios": "Wi-Fi radios and BSS",
+          "interval_dhcp": "DHCP leases and configuration",
+          "interval_network": "LAN, DNS and IPv6",
+          "interval_wifi_environment": "Cached Wi-Fi channel usage and neighbors",
+          "interval_storage": "Disks and partitions",
+          "interval_services": "Network services",
+          "interval_routing": "NAT, firewall and UPnP IGD",
+          "interval_vpn": "VPN status and connections",
+          "interval_downloads": "Download tasks and statistics",
+          "interval_parental": "Parental controls",
+          "interval_freeplug": "Freeplug links",
+          "interval_connection_logs": "Connection history logs"
+        }
+      },
+      "alerts": {
+        "title": "Events and alerts",
+        "description": "Two fresh observations are always required. FTTH power is documented in hundredths of dBm: change the source unit only after verifying your firmware. Wi-Fi signal is documented as attenuation in dB. Known Wi-Fi clients use radio associations instead of delayed LAN status; incomplete radio coverage makes presence unavailable.",
+        "data": {
+          "disconnect_delay": "Disconnect confirmation delay (seconds)",
+          "event_delay": "Other transition delay (seconds)",
+          "alert_delay": "Alert confirmation delay (seconds)",
+          "wifi_signal_hysteresis": "Wi-Fi hysteresis (dB)",
+          "temperature_hysteresis": "Temperature hysteresis (°C)",
+          "fibre_rx_hysteresis": "Fibre power hysteresis (dB)",
+          "wifi_signal_threshold": "Wi-Fi attenuation threshold (dB)",
+          "temperature_threshold": "System temperature threshold (°C)",
+          "fibre_rx_threshold": "Fibre RX power threshold (dBm)",
+          "events_enabled": "Publish automation events",
+          "fibre_power_unit": "Source unit for optical power",
+          "wifi_disconnect_delay": "Wi-Fi absence confirmation delay (seconds)"
+        }
+      },
+      "privacy": {
+        "title": "Privacy and diagnostics",
+        "description": "JSON diagnostics never include raw API responses. Temporary logging only records counts, without names, addresses or tokens. HA backups contain the token and local inventory: protect them.",
+        "data": {
+          "expose_identity": "Expose addresses and names in entities",
+          "event_identity": "Include MAC and name in events",
+          "track_new_devices": "Track newly observed network identities",
+          "unknown_metrics": "Create unverified numeric metrics (disabled entities)",
+          "history_size": "History entries retained per device (0–100)",
+          "debug_minutes": "Temporary safe diagnostic logging (0–60 minutes)"
+        }
+      },
+      "capabilities": {
+        "title": "API capabilities",
+        "description": "API version: {api_version}.\n{summary}\nDownload integration diagnostics for endpoints, permissions, fields and response times."
+      },
+      "essential": {
+        "title": "Essential profile",
+        "description": "Enable only Internet, fibre, presence, Wi-Fi, Ethernet and temperatures. One presence tracker is enabled per device; same-name identities are grouped. Other families and detailed sensors are optional. Superseded grouped entities are replaced by the retained device: update automations that used them. Entities manually disabled stay disabled."
+      }
+    }
+  },
+  "selector": {
+    "families": {
+      "options": {
+        "wan": "Internet / WAN",
+        "fibre": "Optical fibre",
+        "presence": "Network device inventory",
+        "wifi_clients": "Individual Wi-Fi clients",
+        "ethernet": "Ethernet ports",
+        "system": "Hardware and system",
+        "wifi_radios": "Wi-Fi radios and BSS",
+        "dhcp": "DHCP leases and configuration",
+        "network": "LAN, DNS and IPv6",
+        "wifi_environment": "Cached Wi-Fi channel usage and neighbors",
+        "storage": "Disks and partitions",
+        "services": "Network services",
+        "routing": "NAT, firewall and UPnP IGD",
+        "vpn": "VPN status and connections",
+        "downloads": "Download tasks and statistics",
+        "parental": "Parental controls",
+        "freeplug": "Freeplug links",
+        "connection_logs": "Connection history logs"
+      }
+    },
+    "fibre_power_unit": {
+      "options": {
+        "hundredths_dbm": "Hundredths of dBm (Freebox documentation)",
+        "dbm": "Direct dBm (verified firmware)"
+      }
+    }
+  }
+}

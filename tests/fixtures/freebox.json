@@ -1,0 +1,259 @@
+{
+  "connection/": {
+    "state": "up",
+    "type": "ethernet",
+    "media": "ftth",
+    "rate_down": 125000000,
+    "rate_up": 1000000,
+    "bandwidth_down": 8000000000,
+    "bandwidth_up": 8000000000,
+    "bytes_down": 123456789,
+    "bytes_up": 555555,
+    "ipv4": "192.0.2.1",
+    "ipv6": "2001:db8::1"
+  },
+  "connection/ftth/": {
+    "sfp_present": true,
+    "sfp_alim_ok": true,
+    "sfp_has_power_report": true,
+    "sfp_has_signal": true,
+    "link": true,
+    "sfp_pwr_rx": -1809,
+    "sfp_pwr_tx": 712,
+    "sfp_vendor": "Example",
+    "sfp_model": "Optical module"
+  },
+  "system/": {
+    "board_name": "fbxgw9-r1",
+    "firmware_version": "4.12.2",
+    "uptime_val": 10000,
+    "temp_cpub": 55,
+    "fan_rpm": 1200,
+    "sensors": [
+      {
+        "id": "temp_t1",
+        "name": "CPU temperature",
+        "type": "temp",
+        "value": 54
+      }
+    ],
+    "fans": [
+      {
+        "id": "fan0_speed",
+        "name": "Fan",
+        "value": 1100
+      }
+    ]
+  },
+  "lan/browser/interfaces/": [
+    {
+      "name": "pub",
+      "host_count": 1
+    }
+  ],
+  "lan/browser/pub/": [
+    {
+      "id": "ether-02:00:00:00:00:01",
+      "l2ident": {
+        "id": "02:00:00:00:00:01",
+        "type": "mac_address"
+      },
+      "primary_name": "Example phone",
+      "host_type": "smartphone",
+      "vendor_name": "Example",
+      "active": true,
+      "reachable": true,
+      "last_activity": 1700000000,
+      "names": [
+        {
+          "name": "example-phone",
+          "source": "dhcp"
+        }
+      ],
+      "l3connectivities": [
+        {
+          "addr": "192.0.2.10",
+          "af": "ipv4",
+          "active": true
+        },
+        {
+          "addr": "2001:db8::10",
+          "af": "ipv6",
+          "active": true
+        }
+      ]
+    }
+  ],
+  "wifi/ap/": [
+    {
+      "id": 0,
+      "name": "Radio 6 GHz",
+      "config": {
+        "band": "6g",
+        "channel_width": 320
+      },
+      "status": {
+        "state": "active",
+        "primary_channel": 37,
+        "channel_width": 320
+      },
+      "capabilities": {
+        "eht": true
+      }
+    }
+  ],
+  "wifi/ap/0/": {
+    "id": 0,
+    "name": "Radio 6 GHz",
+    "config": {
+      "band": "6g",
+      "channel_width": 320
+    },
+    "status": {
+      "state": "active",
+      "primary_channel": 37,
+      "channel_width": 320
+    }
+  },
+  "wifi/ap/0/stations/": [
+    {
+      "mac": "02:00:00:00:00:01",
+      "hostname": "Example phone",
+      "state": "authenticated",
+      "signal": -50,
+      "bssid": "00:00:00:00:00:ff",
+      "rx_bytes": 1000,
+      "tx_bytes": 2000,
+      "rx_rate": 125000,
+      "tx_rate": 250000,
+      "conn_duration": 600,
+      "inactive": 0,
+      "last_rx": {
+        "bitrate": 24000,
+        "mcs": 11,
+        "width": "320"
+      },
+      "last_tx": {
+        "bitrate": 18000,
+        "mcs": 9,
+        "width": "320"
+      },
+      "flags": {
+        "eht": true,
+        "authorized": true
+      }
+    }
+  ],
+  "wifi/bss/": [
+    {
+      "id": "00:00:00:00:00:ff",
+      "bssid": "00:00:00:00:00:ff",
+      "config": {
+        "ssid": "Example network",
+        "enabled": true,
+        "key": "never-cache-this"
+      }
+    }
+  ],
+  "wifi/config/": {
+    "enabled": true
+  },
+  "dhcp/dynamic_lease/": [
+    {
+      "mac": "02:00:00:00:00:01",
+      "hostname": "example-phone",
+      "ip": "192.0.2.10",
+      "lease_remaining": 1200
+    }
+  ],
+  "dhcp/static_lease/": [
+    {
+      "mac": "02:00:00:00:00:01",
+      "ip": "192.0.2.10",
+      "hostname": "example-phone"
+    }
+  ],
+  "dhcp/config/": {
+    "enabled": true,
+    "ip_range_start": "192.0.2.10",
+    "ip_range_end": "192.0.2.200",
+    "dns": [
+      "192.0.2.254",
+      "192.0.2.53"
+    ]
+  },
+  "switch/status/": [
+    {
+      "id": 1,
+      "link": "up",
+      "speed": "10000",
+      "duplex": "full",
+      "mode": "10GBaseT-FD",
+      "mac_list": []
+    }
+  ],
+  "switch/port/1/stats": {
+    "rx_good_bytes": 1234567,
+    "tx_bytes": 456789,
+    "rx_bytes_rate": 1250000,
+    "tx_bytes_rate": 2500000,
+    "rx_err_packets": 2,
+    "rx_good_packets": 1000,
+    "tx_packets": 800
+  },
+  "switch/port/1": {
+    "id": 1,
+    "speed": "auto",
+    "duplex": "auto"
+  },
+  "storage/disk/": [
+    {
+      "id": 1,
+      "model": "Example SSD",
+      "state": "enabled",
+      "total_bytes": 1000000000,
+      "temp": 33,
+      "partitions": [
+        {
+          "id": 3,
+          "disk_id": 1,
+          "state": "mounted",
+          "total_bytes": 1000000000,
+          "free_bytes": 700000000,
+          "used_bytes": 300000000,
+          "fstype": "ext4"
+        }
+      ]
+    }
+  ],
+  "storage/partition/": [
+    {
+      "id": 3,
+      "disk_id": 1,
+      "state": "mounted",
+      "total_bytes": 1000000000,
+      "free_bytes": 700000000,
+      "used_bytes": 300000000,
+      "fstype": "ext4"
+    }
+  ],
+  "storage/config/": {
+    "external_pm_enabled": true
+  },
+  "wifi/ap/0/channel_usage/": [
+    {
+      "channel": 37,
+      "band": "6g",
+      "noise_level": -85,
+      "rx_busy_percent": 25
+    }
+  ],
+  "wifi/ap/0/neighbors/": [
+    {
+      "bssid": "00:00:00:00:00:fe",
+      "ssid": "Neighbor",
+      "signal": -77,
+      "channel": 37
+    }
+  ]
+}

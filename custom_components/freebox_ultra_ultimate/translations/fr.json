@@ -1,0 +1,163 @@
+{
+  "title": "Freebox HA",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connecter la Freebox",
+        "description": "Freebox HA {version}.\n\nAdresse locale de la box. Seul /api_version est lu en HTTP, sans secret. L’appairage et toutes les données utilisent HTTPS avec validation du certificat. Port HTTPS local : 443 par défaut.",
+        "data": {
+          "host": "Adresse locale",
+          "port": "Port HTTPS local"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Appairer à nouveau",
+        "description": "Le jeton a été révoqué. Un nouvel appairage demandera une autorisation sur l’écran de la Freebox."
+      }
+    },
+    "progress": {
+      "pairing": "Autorise « Freebox HA » sur l’écran de ta Freebox. Attente maximale : deux minutes."
+    },
+    "error": {
+      "cannot_connect": "Connexion impossible. Vérifie l’adresse locale, HTTPS et le certificat.",
+      "tls_certificate_error": "Le certificat HTTPS n’a pas pu être vérifié. Vérifie l’heure de Home Assistant et installe la dernière version de Freebox HA.",
+      "tls_handshake_error": "La négociation HTTPS a échoué. Vérifie le port HTTPS local et le firmware Freebox.",
+      "connection_timeout": "La Freebox n’a pas répondu à temps. Vérifie que Home Assistant peut joindre son adresse locale.",
+      "connection_refused": "Le port HTTPS local refuse la connexion. Vérifie le port ; 443 par défaut.",
+      "https_unavailable": "Cette Freebox indique que HTTPS est indisponible.",
+      "invalid_api_version": "La réponse /api_version est invalide ou incomplète. Vérifie l’adresse locale de la box.",
+      "apps_denied": "Freebox OS refuse les nouvelles autorisations d’application. Autorise les applications dans ses réglages d’accès.",
+      "wrong_freebox": "L’identité Freebox a changé entre la découverte et la connexion HTTPS vérifiée.",
+      "invalid_request": "La Freebox rejette les paramètres d’autorisation. Mets à jour Freebox HA et consulte le code d’appairage dans les journaux HA.",
+      "new_apps_denied": "Freebox OS a désactivé l’autorisation de nouvelles applications. Active-la dans ses réglages d’accès.",
+      "denied_from_external_ip": "La Freebox considère cette demande comme distante. Home Assistant doit être sur son réseau local pour l’appairage.",
+      "ratelimited": "La Freebox limite temporairement les demandes d’autorisation. Patiente avant de réessayer.",
+      "internal_error": "La Freebox signale une erreur interne d’autorisation. Vérifie son firmware et réessaie plus tard."
+    },
+    "abort": {
+      "already_configured": "Cette Freebox est déjà configurée.",
+      "wrong_freebox": "L’identité de la Freebox ne correspond pas.",
+      "denied": "Autorisation refusée sur la Freebox.",
+      "pairing_failed": "Appairage expiré ou interrompu. Réessaie.",
+      "reauth_successful": "Nouvel appairage réussi.",
+      "reconfigure_successful": "Configuration mise à jour."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options Freebox HA",
+        "menu_options": {
+          "categories": "Familles et détails",
+          "intervals": "Intervalles de collecte",
+          "alerts": "Événements et seuils",
+          "privacy": "Confidentialité et diagnostics",
+          "capabilities": "Capacités détectées",
+          "essential": "Appliquer le profil Essentiel"
+        }
+      },
+      "categories": {
+        "title": "Données à collecter",
+        "description": "Les endpoints refusés sont ignorés et restent visibles dans les diagnostics. Aucun scan actif n’est lancé. Les familles téléchargements et contrôle parental peuvent nécessiter des permissions supplémentaires dans Freebox OS. Par défaut, seules les entités essentielles sont actives. Les capteurs désactivés peuvent être activés individuellement depuis leur appareil. Le regroupement par nom fusionne les identités LAN/Wi-Fi et conserve leurs alias MAC.",
+        "data": {
+          "families": "Familles de données",
+          "detailed_devices": "Statistiques détaillées par client",
+          "websocket": "Essayer les abonnements WebSocket disponibles",
+          "advanced_metrics": "Activer les métriques techniques et de diagnostic",
+          "group_by_name": "Regrouper les appareils portant le même nom"
+        }
+      },
+      "intervals": {
+        "title": "Intervalles (secondes)",
+        "data": {
+          "interval_wan": "Internet / WAN",
+          "interval_fibre": "Fibre optique",
+          "interval_presence": "Inventaire des appareils réseau",
+          "interval_wifi_clients": "Clients Wi-Fi individuels",
+          "interval_ethernet": "Ports Ethernet",
+          "interval_system": "Matériel et système",
+          "interval_wifi_radios": "Radios Wi-Fi et BSS",
+          "interval_dhcp": "Baux et configuration DHCP",
+          "interval_network": "LAN, DNS et IPv6",
+          "interval_wifi_environment": "Occupation des canaux et voisins en cache",
+          "interval_storage": "Disques et partitions",
+          "interval_services": "Services réseau",
+          "interval_routing": "NAT, pare-feu et UPnP IGD",
+          "interval_vpn": "État et connexions VPN",
+          "interval_downloads": "Téléchargements et statistiques",
+          "interval_parental": "Contrôle parental",
+          "interval_freeplug": "Liens Freeplug",
+          "interval_connection_logs": "Journal des connexions"
+        }
+      },
+      "alerts": {
+        "title": "Événements et alertes",
+        "description": "Deux observations fraîches sont toujours nécessaires. La puissance FTTH est documentée en centièmes de dBm : change l’unité uniquement après vérification de ton firmware. Le champ Wi-Fi signal est documenté comme une atténuation en dB. Les clients Wi-Fi connus utilisent les associations radio plutôt que le statut LAN retardé ; une radio inaccessible rend la présence indisponible.",
+        "data": {
+          "disconnect_delay": "Confirmation de déconnexion (secondes)",
+          "event_delay": "Confirmation des autres changements (secondes)",
+          "alert_delay": "Confirmation des alertes (secondes)",
+          "wifi_signal_hysteresis": "Hystérésis Wi-Fi (dB)",
+          "temperature_hysteresis": "Hystérésis de température (°C)",
+          "fibre_rx_hysteresis": "Hystérésis de puissance optique (dB)",
+          "wifi_signal_threshold": "Seuil du signal Wi-Fi documenté (dB)",
+          "temperature_threshold": "Seuil de température système (°C)",
+          "fibre_rx_threshold": "Seuil de puissance optique RX (dBm)",
+          "events_enabled": "Publier les événements d’automatisation",
+          "fibre_power_unit": "Unité source de puissance optique",
+          "wifi_disconnect_delay": "Délai de confirmation d’absence Wi-Fi (secondes)"
+        }
+      },
+      "privacy": {
+        "title": "Confidentialité et diagnostics",
+        "description": "Le diagnostic JSON n’inclut aucune réponse brute. Le mode temporaire journalise uniquement des compteurs, sans noms, adresses ou jetons. Les sauvegardes HA contiennent le jeton et l’inventaire local : protège-les.",
+        "data": {
+          "expose_identity": "Exposer les adresses et noms dans les entités",
+          "event_identity": "Inclure les MAC et noms dans les événements",
+          "track_new_devices": "Suivre les nouvelles identités réseau",
+          "unknown_metrics": "Créer les métriques numériques non vérifiées (entités désactivées)",
+          "history_size": "Historique conservé par appareil (0–100)",
+          "debug_minutes": "Journalisation de diagnostic temporaire (0–60 minutes)"
+        }
+      },
+      "capabilities": {
+        "title": "Capacités API",
+        "description": "Version API : {api_version}.\n{summary}\nTélécharge les diagnostics de l’intégration pour les endpoints, permissions, champs et temps de réponse."
+      },
+      "essential": {
+        "title": "Profil Essentiel",
+        "description": "Active uniquement Internet, fibre, présence, Wi-Fi, Ethernet et températures. Un seul suivi de présence est activé par appareil ; les identités portant le même nom sont regroupées. Les autres familles et les capteurs détaillés deviennent optionnels. Les anciennes entités des identités regroupées sont remplacées par celles de l’appareil conservé : adapte les automatisations qui les utilisent. Les entités désactivées manuellement restent désactivées."
+      }
+    }
+  },
+  "selector": {
+    "families": {
+      "options": {
+        "wan": "Internet / WAN",
+        "fibre": "Fibre optique",
+        "presence": "Inventaire des appareils réseau",
+        "wifi_clients": "Clients Wi-Fi individuels",
+        "ethernet": "Ports Ethernet",
+        "system": "Matériel et système",
+        "wifi_radios": "Radios Wi-Fi et BSS",
+        "dhcp": "Baux et configuration DHCP",
+        "network": "LAN, DNS et IPv6",
+        "wifi_environment": "Occupation des canaux et voisins en cache",
+        "storage": "Disques et partitions",
+        "services": "Services réseau",
+        "routing": "NAT, pare-feu et UPnP IGD",
+        "vpn": "État et connexions VPN",
+        "downloads": "Téléchargements et statistiques",
+        "parental": "Contrôle parental",
+        "freeplug": "Liens Freeplug",
+        "connection_logs": "Journal des connexions"
+      }
+    },
+    "fibre_power_unit": {
+      "options": {
+        "hundredths_dbm": "Centièmes de dBm (documentation Freebox)",
+        "dbm": "dBm directs (firmware vérifié)"
+      }
+    }
+  }
+}

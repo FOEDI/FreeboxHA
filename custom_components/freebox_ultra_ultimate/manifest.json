@@ -1,0 +1,20 @@
+{
+  "domain": "freebox_ultra_ultimate",
+  "name": "Freebox HA",
+  "codeowners": [
+    "@FOEDI"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "zeroconf"
+  ],
+  "documentation": "https://github.com/FOEDI/FreeboxHA",
+  "integration_type": "hub",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/FOEDI/FreeboxHA/issues",
+  "requirements": [],
+  "version": "1.0.0",
+  "zeroconf": [
+    "_fbx-api._tcp.local."
+  ]
+}
